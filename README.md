@@ -37,6 +37,7 @@ Most of the actions should be obvious. Some not-so-obvious features are listed h
 
 ## Algorithms
 
+* MEOW
 * CRC32
 * MD2, MD4, MD5
 * RipeMD160
