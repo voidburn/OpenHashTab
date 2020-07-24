@@ -29,6 +29,9 @@
     <Filter Include="CRC32">
       <UniqueIdentifier>{f023d767-ba4d-4281-9822-8aff43aeaf05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MeowHash">
+      <UniqueIdentifier>{606d4b71-b274-4701-b997-63a484e2055d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="Coordinator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="meow_hash_x64_aesni.h">
+      <Filter>MeowHash</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

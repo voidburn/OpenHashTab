@@ -56,7 +56,6 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 
 [Files]
 Source: "x64\Release\{#DLLName}";   DestDir: "{sys}"; Flags: ignoreversion restartreplace regserver solidbreak 64bit; Check: InstallArch('x64')
-Source: "ARM64\Release\{#DLLName}"; DestDir: "{sys}"; Flags: ignoreversion restartreplace regserver solidbreak 64bit; Check: InstallArch('arm64') 
 Source: "Release\{#DLLName}";       DestDir: "{sys}"; Flags: ignoreversion restartreplace regserver solidbreak 32bit
 
 [Code]

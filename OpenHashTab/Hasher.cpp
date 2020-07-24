@@ -28,6 +28,7 @@
 #include "blake2sp.h"
 #include "sha3.h"
 #include "crc32.h"
+#include "meow_hash_x64_aesni.h"
 
 template <
   typename Ctx,
@@ -237,6 +238,61 @@ public:
   }
 };
 
+class MeowHashContext : HashContext
+{
+    template <typename T> friend HashContext* hash_context_factory(HashAlgorithm* algorithm);
+
+    meow_u128 hash {};
+
+public:
+    MeowHashContext(HashAlgorithm* algorithm) : HashContext(algorithm) {}
+    ~MeowHashContext() = default;
+
+    void Clear() override
+    {
+        hash = _mm_setzero_si128();
+    }
+
+    void Update(const void* data, size_t size) override
+    {
+        hash = MeowHash(MeowDefaultSeed, size, const_cast<void*>(data));
+    }
+
+    std::vector<uint8_t> Finish() override
+    {
+        std::vector<uint8_t> result;
+        result.resize(16);
+
+        unsigned int bytes;
+        bytes = MeowU32From(hash, 3);
+        result[0] = 0xFF & (bytes >> 24);
+        result[1] = 0xFF & (bytes >> 16);
+        result[2] = 0xFF & (bytes >> 8);
+        result[3] = 0xFF & (bytes >> 0);
+
+        bytes = MeowU32From(hash, 2);
+        result[4] = 0xFF & (bytes >> 24);
+        result[5] = 0xFF & (bytes >> 16);
+        result[6] = 0xFF & (bytes >> 8);
+        result[7] = 0xFF & (bytes >> 0);
+
+        bytes = MeowU32From(hash, 1);
+        result[8] = 0xFF & (bytes >> 24);
+        result[9] = 0xFF & (bytes >> 16);
+        result[10] = 0xFF & (bytes >> 8);
+        result[11] = 0xFF & (bytes >> 0);
+
+        bytes = MeowU32From(hash, 0);
+        result[12] = 0xFF & (bytes >> 24);
+        result[13] = 0xFF & (bytes >> 16);
+        result[14] = 0xFF & (bytes >> 8);
+        result[15] = 0xFF & (bytes >> 0);
+
+
+        return result;
+    }
+};
+
 template <typename T> HashContext* hash_context_factory(HashAlgorithm* algorithm) { return new T(algorithm); }
 
 // these are what I found with a quick FTP search
@@ -256,6 +312,7 @@ HashAlgorithm HashAlgorithm::g_hashers[] =
   { "MD2", 16, no_exts, hash_context_factory<Md2HashContext>, false, false },
   { "MD4", 16, no_exts, hash_context_factory<Md4HashContext>, false, false },
   { "MD5", 16, md5_exts, hash_context_factory<Md5HashContext>, false, true },
+  { "MEOW", 128, no_exts, hash_context_factory<MeowHashContext>, true, false },
   { "RipeMD160", 20, ripemd160_exts, hash_context_factory<RipeMD160HashContext>, true, false },
   { "SHA-1", 20, sha1_exts, hash_context_factory<Sha1HashContext>, true, true },
   { "SHA-224", 28, sha224_exts, hash_context_factory<Sha224HashContext>, true, false },
