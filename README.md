@@ -2,11 +2,11 @@
 
 ## About
 
-OpenHashTab is a shell extension for conveniently calculating and checking file hashes from file properties.
+OpenHashTab is a shell extension for conveniently calculating and checking file hashes from file properties. **This fork implements the Meow Hashing algorithm while dropping the ARM64 architecture**, Meow Hash is extremely fast on very large files and is especially suited in those cases where the working set of files is multiples of tens of Gigabytes, game development repositories is one of such cases.
 
 ## Features
 
-* Support for 14 different selectable algorithms, see **Algorithms**
+* Support for 15 different selectable algorithms, see **Algorithms**
 * md5sum / sha1sum / sha256sum / etc.. compatibility for checking and exporting hashes
 * Easy to use checker and single-click sumfile export to clipboard or file
 * Select then 
@@ -19,7 +19,7 @@ OpenHashTab is a shell extension for conveniently calculating and checking file 
 
 ## System requirements
 
-* Windows Vista or later (x86 / x64 / ARM64)
+* Windows Vista or later (x86 / x64)
 * 1 GB RAM or more (for efficent hashing of more than 512 files at a time)
 
 ## Usage
@@ -47,7 +47,7 @@ Most of the actions should be obvious. Some not-so-obvious features are listed h
 
 ## Download
 
-[Latest release](https://github.com/namazso/OpenHashTab/releases/latest/download/OpenHashTab_setup.exe)
+[Latest release](https://github.com/voidburn/OpenHashTab/releases/download/v2.2.0-FELINE/OpenHashTab_FELINE_setup.exe)
 
 ## Screenshot
 
